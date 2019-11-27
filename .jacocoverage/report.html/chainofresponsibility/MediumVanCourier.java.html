@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MediumVanCourier.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;ChainOfResponsibility&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">chainofresponsibility</a> &gt; <span class="el_source">MediumVanCourier.java</span></div><h1>MediumVanCourier.java</h1><pre class="source lang-java linenums">package chainofresponsibility;
+
+/**
+ * Small car vehicle handler
+ *
+ * @author t7077222
+ */
+<span class="fc" id="L8">public class MediumVanCourier implements VehicleChain {</span>
+    private VehicleChain next;
+    private VehicleChain nextSub;
+<span class="fc" id="L11">    private boolean isFull = false;</span>
+
+<span class="fc" id="L13">    public static int maxVehicle = 3;</span>
+<span class="fc" id="L14">    public static int vehicleCount = 0;</span>
+
+    /**
+     * Increments the vehicle count
+     *
+     * @param vehicleCount
+     */
+    public void increment() {
+<span class="fc" id="L22">        vehicleCount++;</span>
+<span class="fc" id="L23">    }</span>
+
+    /**
+     * Gets the current vehicle in the chain and checks to see if it can handle
+     * the request
+     *
+     * @param vehicle
+     * @return
+     */
+    @Override
+    public boolean vehicleChain(Vehicle vehicle) {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (vehicle == null) {</span>
+<span class="fc" id="L35">            return false;</span>
+        }
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (vehicle.getOrderWeight() &lt; 400) {</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">            if (isFull == false) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">                if (vehicleCount &lt; maxVehicle) {</span>
+<span class="fc" id="L40">                    increment();</span>
+<span class="fc" id="L41">                    System.out.println(&quot;A Medium Van With: &quot; + vehicle.toString()</span>
+                            + &quot; ,Capacity [&quot; + vehicleCount
+                            + &quot;/&quot; + maxVehicle + &quot;]&quot;);
+                } else {
+<span class="fc" id="L45">                    isFull = true;</span>
+<span class="fc" id="L46">                    System.out.println(&quot;All Of The Medium Vans Are In Use Passing The Request To The Next Available Vehicle!&quot;);</span>
+                }
+            }
+        } else {
+<span class="fc" id="L50">            nextSub.vehicleChain(vehicle);</span>
+        }
+<span class="fc" id="L52">        return true;</span>
+    }
+
+    /**
+     * Sets the next vehicle in the chain
+     *
+     * @param next
+     * @return
+     */
+    @Override
+    public boolean setNextVehicle(VehicleChain next) {
+<span class="fc" id="L63">        this.next = next;</span>
+<span class="fc" id="L64">        return false;</span>
+    }
+
+    /**
+     * Sets the next sub vehicle in the chain
+     *
+     * @param next
+     * @return
+     */
+    @Override
+    public boolean setNextSubVehicle(VehicleChain next) {
+<span class="fc" id="L75">        this.nextSub = next;</span>
+<span class="fc" id="L76">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
